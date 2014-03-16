@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>local</ProjectType>
+    <ProjectVersion>7.10.377</ProjectVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>70b82aa2-0b5f-4027-97d8-23103ae52db0</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>IGain</AssemblyName>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="PGRptControl" />
+    <Reference Include="System.Data" />
+    <Reference Include="System" />
+    <Reference Include="AxInterop.SHDocVw" />
+    <Reference Include="System.Xml" />
+    <Reference Include="PGCookie" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="PGBusinessLogic" />
+    <Reference Include="Interop.SHDocVw" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Global.cs" />
+    <Compile Include="IGain\AccountsPage.cs" />
+    <Compile Include="IGain\DebitReturnPage.cs" />
+    <Compile Include="IGain\InterestPage.cs" />
+    <Compile Include="IGain\IGain.cs" />
+    <Compile Include="IGain\PrintColumnSelection.cs" />
+    <Compile Include="IGain\NewItemForm.cs" />
+    <Compile Include="IGain\CreditPage.cs" />
+    <Compile Include="IGain\ReportsCollectionPage.cs" />
+    <Compile Include="IGain\LookupItem.cs" />
+    <Compile Include="IGain\CreditReissuePage.cs" />
+    <Compile Include="IGain\DebitPage.cs" />
+    <Compile Include="IGain\DebitRecievePage.cs" />
+    <Compile Include="IGain\StockPage.cs" />
+    <Compile Include="IGain\SalePage.cs" />
+    <Compile Include="IGain\CreditRecievePage.cs" />
+    <Compile Include="IGain\ItemsPage.cs" />
+    <Compile Include="IGain\NewAccountForm.cs" />
+    <Compile Include="IGain\AttributesForm.cs" />
+    <Compile Include="IGain\ReportingPage.cs" />
+    <Compile Include="IGain\AttributesPage.cs" />
+    <EmbeddedResource Include="IGain.CreditRecievePage.resources" />
+    <EmbeddedResource Include="IGain.ReportsCollectionPage.resources" />
+    <EmbeddedResource Include="IGain.ReportingPage.resources" />
+    <EmbeddedResource Include="IGain.AccountsPage.resources" />
+    <EmbeddedResource Include="IGain.CreditPage.resources" />
+    <EmbeddedResource Include="IGain.AttributesForm.resources" />
+    <EmbeddedResource Include="IGain.LookupItem.resources" />
+    <EmbeddedResource Include="IGain.DebitReturnPage.resources" />
+    <EmbeddedResource Include="IGain.AttributesPage.resources" />
+    <EmbeddedResource Include="IGain.NewItemForm.resources" />
+    <EmbeddedResource Include="IGain.InterestPage.resources" />
+    <EmbeddedResource Include="IGain.SalePage.resources" />
+    <EmbeddedResource Include="IGain.DebitRecievePage.resources" />
+    <EmbeddedResource Include="IGain.CreditReissuePage.resources" />
+    <EmbeddedResource Include="IGain.NewAccountForm.resources" />
+    <EmbeddedResource Include="IGain.IGain.resources" />
+    <EmbeddedResource Include="IGain.ItemsPage.resources" />
+    <EmbeddedResource Include="IGain.DebitPage.resources" />
+    <EmbeddedResource Include="IGain.StockPage.resources" />
+    <EmbeddedResource Include="IGain.PrintColumnSelection.resources" />
+  </ItemGroup>
+</Project>

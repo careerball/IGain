@@ -1,0 +1,13 @@
+<Reports>
+<Report Name="AttributesReportBox" HelpString="Report for viewing attributes of all transactions and entities" Group="Stock">
+</Report>
+<Report Name="InterestReportBox" HelpString="Report for viewing Interests" Group="Interests">
+</Report>
+<Report Name="StockReportBox" HelpString="Report for viewing Stock items" Group="Stock">
+</Report>
+<Report Name="CalleeReportBox" HelpString="Report for viewing Callee" Group="Profiling">
+</Report>
+<Report Name="CodeReportBox" HelpString="Report for viewing Code" Group="Profiling">
+</Report>
+</Reports>
+

@@ -1,0 +1,335 @@
+<Schema>
+	<SearchCriteria Value="Search for Stock Items">
+		<ReportCondition ID="Item Category">
+			<Entity Name="Item Category" Mapsto="ItemCategories.ItemCategoryName" DataType="String">
+				<Conditions>
+					<Condition Value="=" Show="equals">
+						<Domain Type="TextBox"></Domain>
+					</Condition>
+					<Condition Value="Like" Show="Contains">
+						<Domain Type="ComboBox" Key="%%">
+							<Value>HSD</Value>
+							<Value>MS</Value>
+							<Value>Lubricant</Value>
+						</Domain>
+					</Condition>
+					<Condition Value="=" Show="is">
+						<Domain Type="ListBox">
+							<Query>Select distinct ItemCategoryName from ItemCategories where Len(ItemCategoryName) &gt; 0</Query>
+						</Domain>
+					</Condition>
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ReportCondition ID="Item SubCategory">
+			<Entity Name="Item SubCategory" Mapsto="ItemCategories.ItemSubCategoryName" DataType="String">
+				<Conditions>
+					<Condition Value="=" Show="equals">
+						<Domain Type="TextBox"></Domain>
+					</Condition>
+					<Condition Value="Like" Show="Contains">
+						<Domain Type="ComboBox" Key="%%">
+							<Value>HP</Value>
+							<Value>ZX</Value>
+						</Domain>
+					</Condition>
+					<Condition Value="=" Show="is">
+						<Domain Type="ListBox">
+							<Query>Select distinct ItemSubCategoryName from ItemCategories where Len(ItemSubCategoryName) &gt; 0 </Query>
+						</Domain>
+					</Condition>
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ResultSet BindTo="Stock">
+			<MasterSet TableName="Stock">SELECT ItemCategories.ItemCategoryName as [Item Category] ,Itemcategories.ItemSubCategoryName as [Item Subcategory],ItemCategories.IsInventory as [Is Inventory Item],Stock.StockCounter as [Stock],Stock.RunningRate as [Purchase rate],Stock.ChestCount as [Chests inStock],Stock.FreeQuantity as [Free Qty in stock],ItemCategories.ItemCategoryID as [Item ID],Stock.DateOfTransaction as [Last transaction date] FROM Stock,ItemCategories WHERE ( {Item SubCategory} ) and  ( {Item Category} ) and ItemCategories.ItemCategoryID=Stock.ItemCategoryID</MasterSet>
+		</ResultSet>
+	</SearchCriteria>
+<SearchCriteria Value="Search for Packings">
+		<ReportCondition ID="Item Category">
+			<Entity Name="Item Category" Mapsto="ItemCategories.ItemCategoryName" DataType="String">
+				<Conditions>
+					<Condition Value="=" Show="equals">
+						<Domain Type="TextBox"></Domain>
+					</Condition>
+					<Condition Value="Like" Show="Contains">
+						<Domain Type="ComboBox" Key="%%">
+							<Value>HSD</Value>
+							<Value>Petrol</Value>
+							<Value>Lubricant</Value>
+						</Domain>
+					</Condition>
+					<Condition Value="=" Show="is">
+						<Domain Type="ListBox">
+							<Query>Select distinct ItemCategoryName from ItemCategories where Len(ItemCategoryName) &gt; 0</Query>
+						</Domain>
+					</Condition>
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ReportCondition ID="Item SubCategory">
+			<Entity Name="Item SubCategory" Mapsto="ItemCategories.ItemSubCategoryName" DataType="String">
+				<Conditions>
+					<Condition Value="=" Show="equals">
+						<Domain Type="TextBox"></Domain>
+					</Condition>
+					<Condition Value="Like" Show="Contains">
+						<Domain Type="ComboBox" Key="%%">
+							<Value>1.1</Value>
+							<Value>1.2</Value>
+						</Domain>
+					</Condition>
+					<Condition Value="=" Show="is">
+						<Domain Type="ListBox">
+							<Query>Select distinct ItemSubCategoryName from ItemCategories where Len(ItemSubCategoryName) &gt; 0</Query>
+						</Domain>
+					</Condition>
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+	<ReportCondition ID="Packing Slip">
+			<Entity Name="Packing Slip" Mapsto="Packings.PackingSlip" DataType="String">
+				<Conditions>	
+					<Condition Value="=" Show="equals">
+						<Domain Type="TextBox">													
+						</Domain>
+					</Condition>	
+					<Condition Value="Like" Show="Contains">
+						<Domain Type="ComboBox" Key="%%">	
+							<Value>Test</Value>
+							<Value>Slip</Value>												
+						</Domain>
+					</Condition>		
+					<Condition Value="=" Show="is">
+						<Domain Type="ListBox">	
+							<Query>Select distinct PackingSlip from Packings</Query>											
+						</Domain>
+					</Condition>				
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+	<ReportCondition ID="Packing Date">
+			<Entity Name="Packing Date" Mapsto="Packings.DateOfPacking" DataType="Date">
+				<Conditions>													
+					<Condition Value="&gt;=" Show="is greater than or equal to">
+						<Domain Type="ComboBox" Key="##">
+								<Value>31 Mar,2004</Value>							
+						</Domain>
+					</Condition>								
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ReportCondition ID="Packing Date ">
+			<Entity Name="Packing Date " Mapsto="Packings.DateOfPacking" DataType="Date">
+				<Conditions>							
+					<Condition Value="&lt;=" Show="is less than or equal to">
+						<Domain Type="ComboBox" Key="##">
+								<Value>31 Mar,2005</Value>												
+						</Domain>
+					</Condition>														
+				</Conditions>
+			</Entity>
+		</ReportCondition>								
+		<ResultSet BindTo="Packings">
+			<MasterSet TableName="Packings">SELECT ItemCategories.ItemCategoryName as [Item Category] ,Itemcategories.ItemSubCategoryName as [Item Subcategory],ItemCategories.IsInventory as [Is Inventory Item],Packings.TotalQuantityPacked as [Remaining Packed Qty],Packings.ChestsPacked as [Chests packed],Packings.FreeQuantityPacked as [Free Qty packed],ItemCategories.ItemCategoryID as [Item ID],Packings.DateOfPacking as [Date of packing],Packings.PackingSlip as [Packing Slip],Packings.IsDisposed as [Sold],Packings.PackingID as [PackID],Packings.BoxesFormed as [Boxes Remaining] FROM Packings,ItemCategories WHERE ( {Item SubCategory} ) and  ( {Item Category} ) and ( {Packing Slip} ) and ( {Packing Date} ) and (ItemCategories.ItemCategoryID=Packings.ItemCategoryID)</MasterSet>
+		</ResultSet>
+	</SearchCriteria>
+	<SearchCriteria Value="Search for Sellings">
+		<ReportCondition ID="Packing ID">
+			<Entity Name="Packing ID" Mapsto="Sellings.PackingID" DataType="String">
+				<Conditions>										
+					<Condition Value="Like" Show="like">
+							<Domain Type="TextBox" Key="%%">
+							</Domain>
+					</Condition>
+					<Condition Value="=" Show="is">
+						<Domain Type="ComboBox">
+							<Query>Select distinct PackingID from Sellings</Query>
+						</Domain>
+					</Condition>
+				</Conditions>
+			</Entity>
+		</ReportCondition>		
+	<ReportCondition ID="Packing Slip">
+			<Entity Name="Packing Slip" Mapsto="Packings.PackingSlip" DataType="String">
+				<Conditions>						
+					<Condition Value="=" Show="is">
+						<Domain Type="ComboBox">	
+							<Query>Select distinct PackingSlip from Packings</Query>											
+						</Domain>
+					</Condition>	
+					<Condition Value="Like" Show="Contains">
+						<Domain Type="TextBox" Key="%%">								
+						</Domain>
+					</Condition>			
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ReportCondition ID="Selling Slip">
+			<Entity Name="Selling Slip" Mapsto="Sellings.SellingSlip" DataType="String">
+				<Conditions>						
+					<Condition Value="=" Show="is">
+						<Domain Type="ComboBox">	
+							<Query>Select distinct SellingSlip from Sellings</Query>											
+						</Domain>
+					</Condition>	
+					<Condition Value="Like" Show="Contains">
+						<Domain Type="TextBox" Key="%%">								
+						</Domain>
+					</Condition>			
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+	<ReportCondition ID="Selling Date">
+			<Entity Name="Selling Date" Mapsto="Sellings.SellingDate" DataType="Date">
+				<Conditions>													
+					<Condition Value="&gt;=" Show="is greater than or equal to">
+						<Domain Type="ComboBox" Key="##">
+								<Value>31 Mar,2004</Value>							
+						</Domain>
+					</Condition>								
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ReportCondition ID="Selling Date ">
+			<Entity Name="Selling Date " Mapsto="Sellings.SellingDate" DataType="Date">
+				<Conditions>							
+					<Condition Value="&lt;=" Show="is less than or equal to">
+						<Domain Type="ComboBox" Key="##">
+								<Value>31 Mar,2005</Value>												
+						</Domain>
+					</Condition>														
+				</Conditions>
+			</Entity>
+		</ReportCondition>								
+		<ResultSet BindTo="Sellings">
+			<MasterSet TableName="Sellings">SELECT Sellings.SellingSlip as [Selling Slip],Sellings.BoxesSold as [Boxes Sold],Sellings.FreeQuantitySold as [Free Qty Sold],Sellings.TotalQuantitySold as [Total Qty Sold],Sellings.SellingDate as [Date Sold],Sellings.TransactionSet as [Sales Transaction Set],Sellings.SellingRate as [Rate Of Selling],Packings.PackingSlip as [Source Packing's Slip],Packings.IsDisposed as [Is packing sold completely],Sellings.PackingID as [PackingID], Sellings.SellingID as [Selling ID] from Sellings,Packings where (Sellings.PackingID=Packings.PackingID) and ( {Packing ID} ) and ( {Packing Slip} ) and ( {Selling Slip} ) and ( {Selling Date} ) and( {Selling Date } ) group by Sellings.SellingID,sellings.PackingID,Packings.PackingSlip,Sellings.BoxesSold,Sellings.FreeQuantitySold,Sellings.TotalQuantitySold,Sellings.SellingDate,Sellings.TransactionSet,Sellings.SellingSlip,Sellings.SellingRate,Packings.IsDisposed
+			</MasterSet>
+		<DetailSet TableName="Packings">
+		Select PackingID as [PackingID],DateOfPacking as [Packing Date],PackingSlip as [Packing Slip],ItemCategoryID as [Item ID],ChestsPacked  as [Chests Packed],FreeQuantityPacked as [Free Qty Packed],TotalQuantityPacked as [Packed Qty Remaining],isdisposed as [Is Sold Completely],BoxesFormed as [Boxes remaining],TransactionSetIfDisposed as [Affected Transaction Set] from Packings
+		</DetailSet>
+		<Relation Name="Packings-Details" Master="Sellings" Details="Packings" BindingColumn="PackingID" >
+		</Relation>
+		</ResultSet>
+	</SearchCriteria>
+	<SearchCriteria Value="Search for Purchases">
+		<ReportCondition ID="Item Category">
+			<Entity Name="Item Category" Mapsto="ItemCategories.ItemCategoryName" DataType="String">
+				<Conditions>
+					<Condition Value="=" Show="equals">
+						<Domain Type="TextBox"></Domain>
+					</Condition>
+					<Condition Value="Like" Show="Contains">
+						<Domain Type="ComboBox" Key="%%">
+							<Value>HSD</Value>
+							<Value>Petrol</Value>
+							<Value>Lubricant</Value>
+						</Domain>
+					</Condition>
+					<Condition Value="=" Show="is">
+						<Domain Type="ListBox">
+							<Query>Select distinct ItemCategoryName from ItemCategories where Len(ItemCategoryName) &gt; 0</Query>
+						</Domain>
+					</Condition>
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ReportCondition ID="Item SubCategory">
+			<Entity Name="Item SubCategory" Mapsto="ItemCategories.ItemSubCategoryName" DataType="String">
+				<Conditions>
+					<Condition Value="=" Show="equals">
+						<Domain Type="TextBox"></Domain>
+					</Condition>
+					<Condition Value="Like" Show="Contains">
+						<Domain Type="ComboBox" Key="%%">
+							<Value>HP</Value>
+							<Value>ZX</Value>
+						</Domain>
+					</Condition>
+					<Condition Value="=" Show="is">
+						<Domain Type="ListBox">
+							<Query>Select distinct ItemSubCategoryName from ItemCategories where Len(ItemSubCategoryName) &gt; 0</Query>
+						</Domain>
+					</Condition>
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ReportCondition ID="Purchasing Date">
+			<Entity Name="Purchasing Date" Mapsto="Transactions.DateOfTransaction" DataType="Date">
+				<Conditions>													
+					<Condition Value="&gt;=" Show="is greater than or equal to">
+						<Domain Type="ComboBox" Key="##">
+								<Value>31 Mar,2004</Value>							
+						</Domain>
+					</Condition>								
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ReportCondition ID="Purchasing Date ">
+			<Entity Name="Purchasing Date " Mapsto="Transactions.DateOfTransaction" DataType="Date">
+				<Conditions>													
+					<Condition Value="&lt;=" Show="is less than or equal to">
+						<Domain Type="ComboBox" Key="##">
+								<Value>31 Mar,2005</Value>							
+						</Domain>
+					</Condition>								
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ReportCondition ID="Purchase Slip">
+			<Entity Name="Purchase Slip" Mapsto="Transactions.SlipNumber" DataType="String">							
+				<Conditions>													
+					<Condition Value="Like" Show="Contains">
+						<Domain Type="TextBox" Key="%%">								
+						</Domain>
+					</Condition>								
+					<Condition Value="=" Show="is">
+						<Domain Type="ComboBox">
+								<Query>Select distinct SlipNumber from Transactions where StockAffected &lt;&gt; 0 and SlipIssued &lt;&gt; 0 and AccountCredited='Cash-Cash' and AccountDebited in(Select AccountID from AccountTypes where AccountType='Purchase')</Query>							
+						</Domain>
+					</Condition>		
+				</Conditions>
+			</Entity>
+		</ReportCondition>		
+		<ReportCondition ID="If Inventory Item">
+			<Entity Name="If Inventory Item" Mapsto="ItemCategories.IsInventory" DataType="Bool">								
+				<Conditions>		
+					<Condition Value="Like" Show="Is regardless">
+						<Domain Type="ListBox" Key="%%">								
+							<Value></Value>
+						</Domain>
+					</Condition>											
+					<Condition Value="&lt;&gt; 0" Show="Is true">
+						<Domain Type="ListBox">								
+							<Value></Value>
+						</Domain>
+					</Condition>
+					<Condition Value="= 0" Show="Is false">
+						<Domain Type="ListBox">								
+							<Value></Value>
+						</Domain>
+					</Condition>								
+				</Conditions>
+			</Entity>
+		</ReportCondition>		
+		<ReportCondition ID="TransactionSet">
+			<Entity Name="TransactionSet" Mapsto="Transactions.TransactionSet" DataType="String">							
+				<Conditions>													
+					<Condition Value="Like" Show="Contains">
+						<Domain Type="TextBox" Key="%%">								
+						</Domain>
+					</Condition>								
+					<Condition Value="=" Show="is">
+						<Domain Type="ComboBox">
+								<Query>Select distinct TransactionSet from Transactions where StockAffected &lt;&gt; 0 and SlipIssued &lt;&gt; 0  and AccountCredited='Cash-Cash' and AccountDebited in(Select AccountID from AccountTypes where AccountType='Purchase')</Query>							
+						</Domain>
+					</Condition>		
+				</Conditions>
+			</Entity>
+		</ReportCondition>			
+		<ResultSet BindTo="Transactions">
+			<MasterSet TableName="Transactions">Select Transactions.ItemCategoryID as [Item ID],ItemCategories.ItemCategoryName as [Item Category],ItemCategories.ItemSubCategoryName as [Item Subcategory],ItemCategories.Isinventory as [Is Inventory Item],Transactions.StockCounter as [Qty Purchased],Transactions.ChestsAppended as [Chests purchased],Transactions.FreeQuantityAppended as [Free Qty purchased],Transactions.RunningRate as [Rate Of Purchase],Transactions.Credit as [Total Purchase],Transactions.DateOfTransaction as [Purchase Date],Transactions.SlipNumber as [Purchase Slip],Transactions.TransactionSet as [TransactionSet] from Transactions,ItemCategories where Transactions.ItemCategoryID=ItemCategories.ItemCategoryID and Transactions.StockAffected &lt;&gt; 0 and Transactions.SlipIssued &lt;&gt; 0 and Transactions.AccountCredited='Cash-Cash' and Transactions.AccountDebited in(Select AccountID from AccountTypes where AccountType='Purchase') and ( {Item Category} ) and ( {Item SubCategory} ) and ( {Purchasing Date} ) and ( {Purchasing Date } ) and 
+					( {Purchase Slip} ) and ( {If Inventory Item} ) and ( {TransactionSet} )  </MasterSet>
+		</ResultSet>
+	</SearchCriteria>
+</Schema>

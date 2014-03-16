@@ -1,0 +1,82 @@
+<Schema>
+	<SearchCriteria Value="Search by credit issued to">
+		<ReportCondition ID="Credit">
+			<Entity Name="Credit" Mapsto="" DataType="String">
+				<Conditions>
+					<Condition Value="=" Show="due by">
+						<Domain Type="TextBox"></Domain>
+					</Condition>
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ReportCondition ID="Account Name">
+			<Entity Name="Account Name" Mapsto="AccountTypes.AccountSubType" DataType="String">
+				<Conditions>
+					<Condition Value="=" Show="is">
+						<Domain Type="ComboBox">
+							<Query>
+							Select distinct accounttypes.accountsubtype
+							from accounttypes,Transactions,CreditFlow where accounttypes.accounttype='Credit' and
+							accounttypes.accountsubtype in(select distinct accountsubtype
+							from accounttypes where Accounttype='Interest')
+							and Transactions.AccountDebited=Accounttypes.accountid
+							and Transactions.CreditID=CreditFlow.CreditID
+							and CreditFlow.IsClosed=0
+							</Query>
+						</Domain>
+					</Condition>
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ResultSet BindTo="TRANSACTIONS">
+			<MasterSet TableName="TRANSACTIONS">Select AccountTypes.AccountSubType as [Name],Transactions.DateOfTransaction as
+				[Date Of Transaction],Transactions.SlipNumber as [Slip Number],CreditFlow.AmountReturnable as [Amount Returnable],
+				CreditFlow.CarriedPrinciple as [Principle],CreditFlow.InterestDue as [Interest Due],CreditFlow.BroughtForward as [Carried Forward],
+				CreditFlow.CreditID as [Credit ID],Transactions.TransactionSet as [Transaction Set] from
+				Transactions,CreditFlow,AccountTypes
+				where Transactions.TransactionID=CreditFlow.TransactionID and CreditFlow.IsClosed=0 and 
+				Transactions.AccountDebited=AccountTypes.AccountID and AccountTypes.AccountID in (Select AccountID from AccountTypes where AccountType='Credit' and {Account Name})				
+			</MasterSet>
+		</ResultSet>
+	</SearchCriteria>
+	<SearchCriteria Value="Search by credit taken from">
+		<ReportCondition ID="Credit">
+			<Entity Name="Credit" Mapsto="" DataType="String">
+				<Conditions>
+					<Condition Value="=" Show="due by">
+						<Domain Type="TextBox"></Domain>
+					</Condition>
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ReportCondition ID="Account Name">
+			<Entity Name="Account Name" Mapsto="AccountTypes.AccountSubType" DataType="String">
+				<Conditions>
+					<Condition Value="=" Show="is">
+						<Domain Type="ComboBox">
+							<Query>
+							Select distinct accounttypes.accountsubtype
+							from accounttypes,Transactions,CreditFlow where accounttypes.accounttype='Credit' and
+							accounttypes.accountsubtype in(select distinct accountsubtype
+							from accounttypes where Accounttype='Interest')
+							and Transactions.AccountCredited=Accounttypes.accountid
+							and Transactions.CreditID=CreditFlow.CreditID
+							and CreditFlow.IsClosed=0
+							</Query>
+						</Domain>
+					</Condition>
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ResultSet BindTo="TRANSACTIONS">
+			<MasterSet TableName="TRANSACTIONS">Select AccountTypes.AccountSubType as [Name],Transactions.DateOfTransaction as
+				[Date Of Transaction],Transactions.SlipNumber as [Slip Number],CreditFlow.AmountReturnable as [Amount Returnable],
+				CreditFlow.CarriedPrinciple as [Principle],CreditFlow.InterestDue as [Interest Due],CreditFlow.BroughtForward as [Carried Forward],
+				CreditFlow.CreditID as [Credit ID],Transactions.TransactionSet as [Transaction Set] from
+				Transactions,CreditFlow,AccountTypes
+				where Transactions.TransactionID=CreditFlow.TransactionID and CreditFlow.IsClosed=0 and 
+				Transactions.AccountCredited=AccountTypes.AccountID and AccountTypes.AccountID in (Select AccountID from AccountTypes where AccountType='Credit'and {Account Name})				
+			</MasterSet>
+		</ResultSet>
+	</SearchCriteria>
+</Schema>

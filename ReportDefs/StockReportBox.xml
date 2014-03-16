@@ -1,0 +1,48 @@
+<Schema>
+	<SearchCriteria Value="Search by Item Category">
+		<ReportCondition ID="Item Category">
+			<Entity Name="Item Category" Mapsto="ItemCategories.ItemCategoryName" DataType="String">
+				<Conditions>
+					<Condition Value="=" Show="equals">
+						<Domain Type="TextBox"></Domain>
+					</Condition>
+					<Condition Value="Like" Show="Contains">
+						<Domain Type="ComboBox" Key="%%">
+							<Value>HSD</Value>
+							<Value>MS</Value>
+							<Value>Lubricant</Value>
+						</Domain>
+					</Condition>
+					<Condition Value="=" Show="is">
+						<Domain Type="ListBox">
+							<Query>Select distinct ItemCategoryName from ItemCategories where Len(ItemCategoryName) &gt; 0 and IsInventory &lt;&gt; 0</Query>
+						</Domain>
+					</Condition>
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ReportCondition ID="Item SubCategory">
+			<Entity Name="Item SubCategory" Mapsto="ItemCategories.ItemSubCategoryName" DataType="String">
+				<Conditions>
+					<Condition Value="=" Show="equals">
+						<Domain Type="TextBox"></Domain>
+					</Condition>
+					<Condition Value="Like" Show="Contains">
+						<Domain Type="ComboBox" Key="%%">
+							<Value>HP</Value>
+							<Value>ZX</Value>
+						</Domain>
+					</Condition>
+					<Condition Value="=" Show="is">
+						<Domain Type="ListBox">
+							<Query>Select distinct ItemSubCategoryName from ItemCategories where Len(ItemSubCategoryName) &gt; 0 and IsInventory &lt;&gt; 0</Query>
+						</Domain>
+					</Condition>
+				</Conditions>
+			</Entity>
+		</ReportCondition>
+		<ResultSet BindTo="Stock">
+			<MasterSet TableName="Stock">SELECT ItemCategories.ItemCategoryName as [Item Category] ,Itemcategories.ItemSubCategoryName as [Item Subcategory],Stock.StockCounter as [Stock],Stock.RunningRate as [Purchase rate],Stock.ChestCount as [Chests],Stock.FreeQuantity as [Free Qty],ItemCategories.ItemCategoryID as [Item ID],Stock.DateOfTransaction as [Effective Date], '0.0' as [Stock Appended],'0.0' as [Transaction Amount],'0' as [Chests Appended],'0.0' as [Free Qty Appended]  FROM Stock,ItemCategories WHERE ( {Item SubCategory} ) and  ( {Item Category} ) and ItemCategories.ItemCategoryID=Stock.ItemCategoryID</MasterSet>
+		</ResultSet>
+	</SearchCriteria>
+</Schema>
